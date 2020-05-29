@@ -1,0 +1,21 @@
+{
+  "name": "to-do-list-front-end-30doc-master",
+  "version": "1.0.0",
+  "description": "This task was made with love from me to you all. Enjoy Ensure you maintain the relative file structure of the provided files to prevent unnecessary tear.",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.9.16",
+    "nodemon": "^2.0.4",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
+  }
+}
