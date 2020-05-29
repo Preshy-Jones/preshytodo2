@@ -1,4 +1,4 @@
-const base_url = "https://preshytodo2.herokuapp.com/";
+const base_url = "https://preshytodo2.herokuapp.com";
 
 const clear = document.querySelector(".clear");
 const dateElement = document.getElementById("date");

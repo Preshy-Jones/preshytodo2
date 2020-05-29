@@ -12,18 +12,18 @@ const db = require('./config').mongoURI
 const { ensureAuthenticated } = require('./config/auth')
 const port = process.env.PORT || 8009
 
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, () => {
-    console.log('mongoDB connected')
-})
+// mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, () => {
+//     console.log('mongoDB connected')
+// })
 
 //passport config
 require('./config/passport')(passport)
 
-// dotenv.config();
-// mongoose.connect(process.env.DB_CONNECT,
-//     { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false },
-//     () => console.log('connected to mongodb')
-// );
+dotenv.config();
+mongoose.connect(process.env.DB_CONNECT,
+    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false },
+    () => console.log('connected to mongodb')
+);
 
 app.use(session({
     secret: 'secret',
