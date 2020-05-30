@@ -8,11 +8,11 @@ const passport = require('passport');
 const bcrypt = require('bcryptjs')
 const User = require('./models/User')
 //const bodyParser = require('body-parser');
-const db = require('./config').mongoURI
+//const db = require('./config').mongoURI
 const { ensureAuthenticated } = require('./config/auth')
 const port = process.env.PORT || 8009
 
-// mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, () => {
+// mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true }, () => {
 //     console.log('mongoDB connected')
 // })
 
@@ -51,6 +51,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/css', express.static(__dirname + '/css'));
 app.use('/img', express.static(__dirname + '/img'));
 app.use('/fonts', express.static(__dirname + '/fonts'));
+app.use('/js', express.static(__dirname + '/js'));
 
 
 
@@ -132,23 +133,52 @@ app.post('/login_submit', (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/todo',
         failureRedirect: '/login',
-        failureFlash: true
     })(req, res, next);
 });
 
 
-app.get('/save', ensureAuthenticated, (req, res) => {
-    user = User.findById(req.user._id.toString())
-    res.send(user)
-})
-app.post('/save', ensureAuthenticated, (req, res) => {
-    user = User.findById(req.user._id.toString())
-    res.send(user)
+// app.get('/save', ensureAuthenticated, async (req, res) => {
+//     user = await User.findById(req.user._id)
+//     res.send(user)
+// })
+
+
+app.post('/save', ensureAuthenticated, async (req, res) => {
     data = req.body
+    //console.log(req.body);
+
+    //user = await User.findById(req.user._id.toString())
+    // user.Data = req.body
+    await User.findByIdAndUpdate({ _id: req.user._id }, { Data: data })
+    console.log(data.constructor);
+
+    // res.send(req.body)
+    // res.send(user)
+    //console.log(req.user);
+
+})
+
+app.get("/clear", async (req, res) => {
+
+    await User.findByIdAndUpdate({ _id: req.user._id }, { Data: [] }, (err, result) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(result);
+        }
+    })
+    //    res.send('deleted successfully')
 
 
 })
 
+
+app.get("/data", ensureAuthenticated, async (req, res) => {
+    user = await User.findById(req.user._id)
+    res.json(user.Data)
+    console.log((user.Data).constructor);
+    console.log((user.Data));
+})
 
 
 app.listen(port, () => {

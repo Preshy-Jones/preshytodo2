@@ -1,4 +1,4 @@
-const base_url = "https://preshytodo2.herokuapp.com";
+const base_url = "http://127.0.0.1:8009";
 
 const clear = document.querySelector(".clear");
 const dateElement = document.getElementById("date");
