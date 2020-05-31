@@ -44,7 +44,7 @@ app.use(passport.session());
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }))
 
-
+//app.use(express.static('./public'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
@@ -149,7 +149,13 @@ app.post('/save', ensureAuthenticated, async (req, res) => {
 
     //user = await User.findById(req.user._id.toString())
     // user.Data = req.body
-    await User.findByIdAndUpdate({ _id: req.user._id }, { Data: data })
+    await User.findByIdAndUpdate({ _id: req.user._id }, { Data: data }, (err, result) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(result);
+        }
+    })
     console.log(data.constructor);
 
     // res.send(req.body)
